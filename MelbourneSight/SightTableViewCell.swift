@@ -9,7 +9,10 @@
 import UIKit
 
 class SightTableViewCell: UITableViewCell {
-
+    @IBOutlet weak var mapIconImageView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var descLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

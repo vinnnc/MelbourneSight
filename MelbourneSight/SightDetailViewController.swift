@@ -9,7 +9,12 @@
 import UIKit
 
 class SightDetailViewController: UIViewController {
-
+    @IBOutlet weak var mapIconImageView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var descLabel: UILabel!
+    @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet weak var locationLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

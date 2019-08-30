@@ -13,7 +13,7 @@
         <!--Melbourne Sight-->
         <scene sceneID="Shg-iC-VfY">
             <objects>
-                <viewController id="gnD-gX-CcZ" sceneMemberID="viewController">
+                <viewController id="gnD-gX-CcZ" customClass="HomeViewController" customModule="MelbourneSight" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="d47-5g-NLs">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -38,6 +38,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="dVX-St-XHG" id="OOt-gV-g8A"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I9N-qg-Y5F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -46,7 +49,7 @@
         <!--Sight List-->
         <scene sceneID="6ai-pU-oMY">
             <objects>
-                <tableViewController id="sTk-GP-7aJ" sceneMemberID="viewController">
+                <tableViewController id="sTk-GP-7aJ" customClass="SightListTableViewController" customModule="MelbourneSight" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="7UQ-kO-z5C">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -71,7 +74,7 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="sightCell" id="VU8-b5-mSL">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="sightCell" id="VU8-b5-mSL" customClass="SightTableViewCell" customModule="MelbourneSight" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="72" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VU8-b5-mSL" id="a4f-Bk-exm">
@@ -110,6 +113,9 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="descLabel" destination="7fP-bE-0Tr" id="zAT-Ia-9mQ"/>
+                                    <outlet property="mapIconImageView" destination="RmL-bT-eWa" id="pSs-Kj-TQh"/>
+                                    <outlet property="nameLabel" destination="8n6-fH-kza" id="zKv-dy-ugM"/>
                                     <segue destination="vv2-6K-tz9" kind="show" identifier="sightDetailSegue" id="fjR-UK-Wak"/>
                                 </connections>
                             </tableViewCell>
@@ -126,6 +132,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="sortSegmentedControl" destination="lDZ-w3-d7U" id="nPU-oU-SPR"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Meo-Xy-N2F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -134,7 +143,7 @@
         <!--Sight Detail-->
         <scene sceneID="zE0-c9-Yje">
             <objects>
-                <viewController id="vv2-6K-tz9" sceneMemberID="viewController">
+                <viewController id="vv2-6K-tz9" customClass="SightDetailViewController" customModule="MelbourneSight" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Iek-1Y-nja">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -197,6 +206,13 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="descLabel" destination="ibd-Ng-Oek" id="mSX-r5-D4Q"/>
+                        <outlet property="locationLabel" destination="1iL-Cv-bhT" id="7qD-EF-jdu"/>
+                        <outlet property="mapIconImageView" destination="NtS-lm-MbY" id="yps-nX-OrT"/>
+                        <outlet property="nameLabel" destination="MUA-eM-gEt" id="Bm9-ze-2oV"/>
+                        <outlet property="photoImageView" destination="ICG-gz-edx" id="Ao0-ZS-Kee"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0mL-kU-ePq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -205,7 +221,7 @@
         <!--Edit Sight-->
         <scene sceneID="skF-uA-iLQ">
             <objects>
-                <viewController id="VfR-14-ylS" sceneMemberID="viewController">
+                <viewController id="VfR-14-ylS" customClass="EditSightViewController" customModule="MelbourneSight" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="B7J-iv-chZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -283,6 +299,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GWV-wN-BGl">
                                 <rect key="frame" x="16" y="471" width="382" height="30"/>
                                 <state key="normal" title="Take photo"/>
+                                <connections>
+                                    <action selector="takePhoto:" destination="VfR-14-ylS" eventType="touchUpInside" id="lBQ-QJ-E9Q"/>
+                                </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ipC-Ov-7OD">
                                 <rect key="frame" x="16" y="517" width="382" height="203.5"/>
@@ -336,8 +355,20 @@
                         <viewLayoutGuide key="safeArea" id="Qyu-QU-X9u"/>
                     </view>
                     <navigationItem key="navigationItem" title="Edit Sight" id="wQx-PV-o9e">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="4Wb-Tr-2tx"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="4Wb-Tr-2tx">
+                            <connections>
+                                <action selector="save:" destination="VfR-14-ylS" id="pJB-MG-BTC"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="descTextField" destination="U2X-7X-nO7" id="Pfz-1s-vuf"/>
+                        <outlet property="latitudeTextField" destination="ueO-cO-4zy" id="rEa-5N-0RN"/>
+                        <outlet property="longitudeTextField" destination="Fh7-Ot-024" id="yfd-ir-zvV"/>
+                        <outlet property="mapIconSegmentedControl" destination="GDG-m7-9PE" id="lvB-89-POj"/>
+                        <outlet property="nameTextField" destination="SGt-NY-fgX" id="t1K-l4-9rI"/>
+                        <outlet property="photoImageView" destination="ipC-Ov-7OD" id="JQy-0o-3kc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cqU-DF-27O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -347,7 +378,7 @@
         <scene sceneID="rwe-10-ObL">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LVe-zx-Hv3" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="xJs-Td-nSS" sceneMemberID="viewController">
+                <viewController id="xJs-Td-nSS" customClass="AddSightViewController" customModule="MelbourneSight" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zls-FX-oiZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -425,6 +456,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Jm-98-yCD">
                                 <rect key="frame" x="16" y="471" width="382" height="30"/>
                                 <state key="normal" title="Take photo"/>
+                                <connections>
+                                    <action selector="takePhoto:" destination="xJs-Td-nSS" eventType="touchUpInside" id="yzU-FM-IQE"/>
+                                </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pib-xL-5ec">
                                 <rect key="frame" x="16" y="517" width="382" height="203.5"/>
@@ -477,8 +511,20 @@
                         <viewLayoutGuide key="safeArea" id="cxh-wp-Thr"/>
                     </view>
                     <navigationItem key="navigationItem" title="Add Sight" id="qbY-um-Fwj">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="KAU-K7-uya"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="KAU-K7-uya">
+                            <connections>
+                                <action selector="save:" destination="xJs-Td-nSS" id="p0m-QQ-HOT"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="descTextField" destination="AFv-qW-8ST" id="SN2-hf-BK0"/>
+                        <outlet property="latitudeTextField" destination="mVN-dc-gz4" id="1Go-fH-SSC"/>
+                        <outlet property="longitudeTextField" destination="4Jf-Be-hIT" id="Xbx-7d-6Hq"/>
+                        <outlet property="mapIconSegmentedControl" destination="4YF-kt-8QJ" id="Dew-Uu-Uva"/>
+                        <outlet property="nameTextField" destination="LMW-Oy-R1a" id="6Ze-xL-NZc"/>
+                        <outlet property="photoImageView" destination="pib-xL-5ec" id="ZF8-Hh-7LX"/>
+                    </connections>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="2630" y="-464"/>

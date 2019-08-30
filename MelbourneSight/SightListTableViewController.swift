@@ -9,7 +9,8 @@
 import UIKit
 
 class SightListTableViewController: UITableViewController {
-
+    @IBOutlet weak var sortSegmentedControl: UISegmentedControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
