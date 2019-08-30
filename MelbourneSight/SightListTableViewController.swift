@@ -15,6 +15,7 @@ class SightListTableViewController: UITableViewController, UISearchResultsUpdati
     var allSights: [Sight] = []
     var filteredSights: [Sight] = []
     weak var sightDelegate: AddSightDelegate?
+    var selectedSight: Sight?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,6 +87,10 @@ class SightListTableViewController: UITableViewController, UISearchResultsUpdati
             tableView.deleteRows(at:[indexPath], with: .fade)
         }
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedSight = filteredSights[indexPath.row]
+    }
 
     /*
     // Override to support rearranging the table view.
@@ -111,6 +116,9 @@ class SightListTableViewController: UITableViewController, UISearchResultsUpdati
         if segue.identifier == "addSightSegue" {
             let destination = segue.destination as! AddSightViewController
             destination.sightDelegate = self
+        } else {
+            let destination = segue.destination as! SightDetailViewController
+            destination.sight = selectedSight
         }
     }
 }

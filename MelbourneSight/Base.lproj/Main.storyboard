@@ -283,11 +283,13 @@
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="GDG-m7-9PE">
                                 <rect key="frame" x="16" y="390" width="382" height="29"/>
                                 <segments>
-                                    <segment title="First"/>
-                                    <segment title="Second"/>
-                                    <segment title=""/>
-                                    <segment title=""/>
-                                    <segment title=""/>
+                                    <segment title="" image="mapIcon_0"/>
+                                    <segment title="" image="mapIcon_1"/>
+                                    <segment title="" image="mapIcon_2"/>
+                                    <segment title="" image="mapIcon_3"/>
+                                    <segment title="" image="mapIcon_4"/>
+                                    <segment title="" image="mapIcon_5"/>
+                                    <segment title="" image="mapIcon_6"/>
                                 </segments>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zEN-S7-ALh">
@@ -377,7 +379,6 @@
         <!--Add Sight-->
         <scene sceneID="rwe-10-ObL">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LVe-zx-Hv3" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="xJs-Td-nSS" customClass="AddSightViewController" customModule="MelbourneSight" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zls-FX-oiZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -440,11 +441,13 @@
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="4YF-kt-8QJ">
                                 <rect key="frame" x="16" y="390" width="382" height="29"/>
                                 <segments>
-                                    <segment title="First"/>
-                                    <segment title="Second"/>
-                                    <segment title=""/>
-                                    <segment title=""/>
-                                    <segment title=""/>
+                                    <segment title="" image="mapIcon_0"/>
+                                    <segment title="" image="mapIcon_1"/>
+                                    <segment title="" image="mapIcon_2"/>
+                                    <segment title="" image="mapIcon_3"/>
+                                    <segment title="" image="mapIcon_4"/>
+                                    <segment title="" image="mapIcon_5"/>
+                                    <segment title="" image="mapIcon_6"/>
                                 </segments>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aph-c0-nt7">
@@ -526,6 +529,7 @@
                         <outlet property="photoImageView" destination="pib-xL-5ec" id="ZF8-Hh-7LX"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LVe-zx-Hv3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2630" y="-464"/>
         </scene>
@@ -548,4 +552,13 @@
             <point key="canvasLocation" x="291" y="-464"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="mapIcon_0" width="25" height="25"/>
+        <image name="mapIcon_1" width="25" height="25"/>
+        <image name="mapIcon_2" width="25" height="25"/>
+        <image name="mapIcon_3" width="25" height="25"/>
+        <image name="mapIcon_4" width="25" height="25"/>
+        <image name="mapIcon_5" width="25" height="25"/>
+        <image name="mapIcon_6" width="25" height="25"/>
+    </resources>
 </document>

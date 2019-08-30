@@ -14,10 +14,13 @@ class SightDetailViewController: UIViewController {
     @IBOutlet weak var descLabel: UILabel!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var locationLabel: UILabel!
+    var sight: Sight?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        nameLabel.text = sight?.name
+        descLabel.text = sight?.desc
+        locationLabel.text = "Latitude: \(String(describing: sight?.latitude))/n Longitude: \(String(describing: sight?.longitude))"
         // Do any additional setup after loading the view.
     }
     

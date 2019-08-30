@@ -68,6 +68,7 @@
 		9B49B5A623192C5100A6AB22 /* MelbourneSight */ = {
 			isa = PBXGroup;
 			children = (
+				9B49B5C923195D4700A6AB22 /* Image */,
 				9B49B5A723192C5100A6AB22 /* AppDelegate.swift */,
 				9B49B5AB23192C5100A6AB22 /* Main.storyboard */,
 				9B49B5BB2319341100A6AB22 /* SightListTableViewController.swift */,
@@ -83,6 +84,13 @@
 				9B49B5C52319345100A6AB22 /* SightDetailViewController.swift */,
 			);
 			path = MelbourneSight;
+			sourceTree = "<group>";
+		};
+		9B49B5C923195D4700A6AB22 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Image;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
