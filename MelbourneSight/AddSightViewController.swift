@@ -9,6 +9,8 @@
 import UIKit
 
 class AddSightViewController: UIViewController {
+    
+    weak var sightDelegate: AddSightDelegate?
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var descTextField: UITextField!
     @IBOutlet weak var latitudeTextField: UITextField!
@@ -18,23 +20,33 @@ class AddSightViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
     @IBAction func takePhoto(_ sender: Any) {
     }
     
     @IBAction func save(_ sender: Any) {
+        if nameTextField.text != "" && descTextField.text != "" && latitudeTextField.text != "" && longitudeTextField.text != "" {
+            let name = nameTextField.text!
+            let desc = descTextField.text!
+            guard let latitude = Float(latitudeTextField.text!) else { return }
+            guard let longitude = Float(longitudeTextField.text!) else { return }
+            let mapIcon = String(mapIconSegmentedControl.selectedSegmentIndex)
+            let photo = ""
+            let newSight = Sight(name: name, desc: desc, latitude: latitude, longitude: longitude, mapIcon: mapIcon, photo: photo)
+            let _ = sightDelegate!.addSight(newSight: newSight)
+            navigationController?.popViewController(animated: true)
+            return
+        } else {
+            displayMessage(title: "Not all fields filled", message: "Please fill all information.")
+        }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func displayMessage(title: String, message: String) {
+        // Setup an alert to show user details about the Person
+        // UIAlertController manages an alert instance
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
     }
-    */
-
 }
