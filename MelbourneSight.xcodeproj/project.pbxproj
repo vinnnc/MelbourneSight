@@ -22,6 +22,7 @@
 		9B49B5D0231A277300A6AB22 /* MelbourneSight.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9B49B5CE231A277300A6AB22 /* MelbourneSight.xcdatamodeld */; };
 		9B49B5D3231A283D00A6AB22 /* Sight+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B49B5D1231A283D00A6AB22 /* Sight+CoreDataClass.swift */; };
 		9B49B5D4231A283D00A6AB22 /* Sight+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B49B5D2231A283D00A6AB22 /* Sight+CoreDataProperties.swift */; };
+		9B49B5D6231A308D00A6AB22 /* DatabaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B49B5D5231A308D00A6AB22 /* DatabaseProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		9B49B5CF231A277300A6AB22 /* MelbourneSight.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MelbourneSight.xcdatamodel; sourceTree = "<group>"; };
 		9B49B5D1231A283D00A6AB22 /* Sight+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sight+CoreDataClass.swift"; sourceTree = "<group>"; };
 		9B49B5D2231A283D00A6AB22 /* Sight+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sight+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		9B49B5D5231A308D00A6AB22 /* DatabaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 		9B49B5CD231A275600A6AB22 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				9B49B5D5231A308D00A6AB22 /* DatabaseProtocol.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B49B5D6231A308D00A6AB22 /* DatabaseProtocol.swift in Sources */,
 				9B49B5BC2319341100A6AB22 /* SightListTableViewController.swift in Sources */,
 				9B49B5BE2319341F00A6AB22 /* SightTableViewCell.swift in Sources */,
 				9B49B5C22319343D00A6AB22 /* AddSightViewController.swift in Sources */,
