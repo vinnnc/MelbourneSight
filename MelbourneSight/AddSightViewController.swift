@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddSightViewController: UIViewController {
+class AddSightViewController: UIViewController, UITextFieldDelegate {
     
     weak var sightDelegate: AddSightDelegate?
     @IBOutlet weak var nameTextField: UITextField!
@@ -20,6 +20,15 @@ class AddSightViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        nameTextField.delegate = self
+        descTextField.delegate = self
+        latitudeTextField.delegate = self
+        longitudeTextField.delegate = self
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     @IBAction func takePhoto(_ sender: Any) {
@@ -29,9 +38,9 @@ class AddSightViewController: UIViewController {
         if nameTextField.text != "" && descTextField.text != "" && latitudeTextField.text != "" && longitudeTextField.text != "" {
             let name = nameTextField.text!
             let desc = descTextField.text!
-            guard let latitude = Float(latitudeTextField.text!) else { return }
-            guard let longitude = Float(longitudeTextField.text!) else { return }
-            let mapIcon = String(mapIconSegmentedControl.selectedSegmentIndex)
+            guard let latitude = Double(latitudeTextField.text!) else { return }
+            guard let longitude = Double(longitudeTextField.text!) else { return }
+            let mapIcon = String( mapIconSegmentedControl.selectedSegmentIndex)
             let photo = ""
             let newSight = Sight(name: name, desc: desc, latitude: latitude, longitude: longitude, mapIcon: mapIcon, photo: photo)
             let _ = sightDelegate!.addSight(newSight: newSight)

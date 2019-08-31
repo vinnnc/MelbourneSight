@@ -19,6 +19,7 @@
 		9B49B5C42319344A00A6AB22 /* EditSightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B49B5C32319344A00A6AB22 /* EditSightViewController.swift */; };
 		9B49B5C62319345100A6AB22 /* SightDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B49B5C52319345100A6AB22 /* SightDetailViewController.swift */; };
 		9B49B5C8231944DA00A6AB22 /* AddSightDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B49B5C7231944DA00A6AB22 /* AddSightDelegate.swift */; };
+		9B49B5CB231A23FA00A6AB22 /* SightAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B49B5CA231A23FA00A6AB22 /* SightAnnotation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		9B49B5C32319344A00A6AB22 /* EditSightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSightViewController.swift; sourceTree = "<group>"; };
 		9B49B5C52319345100A6AB22 /* SightDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SightDetailViewController.swift; sourceTree = "<group>"; };
 		9B49B5C7231944DA00A6AB22 /* AddSightDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSightDelegate.swift; sourceTree = "<group>"; };
+		9B49B5CA231A23FA00A6AB22 /* SightAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SightAnnotation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 				9B49B5B323192C5200A6AB22 /* Info.plist */,
 				9B49B5BD2319341F00A6AB22 /* SightTableViewCell.swift */,
 				9B49B5BF2319342D00A6AB22 /* Sight.swift */,
+				9B49B5CA231A23FA00A6AB22 /* SightAnnotation.swift */,
 				9B49B5C7231944DA00A6AB22 /* AddSightDelegate.swift */,
 				9B49B5C12319343D00A6AB22 /* AddSightViewController.swift */,
 				9B49B5C32319344A00A6AB22 /* EditSightViewController.swift */,
@@ -168,6 +171,7 @@
 				9B49B5BE2319341F00A6AB22 /* SightTableViewCell.swift in Sources */,
 				9B49B5C22319343D00A6AB22 /* AddSightViewController.swift in Sources */,
 				9B49B5C62319345100A6AB22 /* SightDetailViewController.swift in Sources */,
+				9B49B5CB231A23FA00A6AB22 /* SightAnnotation.swift in Sources */,
 				9B49B5A823192C5100A6AB22 /* AppDelegate.swift in Sources */,
 				9B49B5C8231944DA00A6AB22 /* AddSightDelegate.swift in Sources */,
 				9B49B5C02319342D00A6AB22 /* Sight.swift in Sources */,

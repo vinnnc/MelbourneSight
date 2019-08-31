@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditSightViewController: UIViewController {
+class EditSightViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var descTextField: UITextField!
     @IBOutlet weak var latitudeTextField: UITextField!
@@ -21,6 +21,15 @@ class EditSightViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        nameTextField.delegate = self
+        descTextField.delegate = self
+        latitudeTextField.delegate = self
+        longitudeTextField.delegate = self
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     @IBAction func takePhoto(_ sender: Any) {

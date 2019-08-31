@@ -11,6 +11,7 @@ import MapKit
 
 class HomeViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
+    var sightList = [SightAnnotation]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +19,17 @@ class HomeViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    func focusOn(annotation: MKAnnotation) {
+        mapView.selectAnnotation(annotation, animated: true)
+        let zoomRegion = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: 1000,
+                                            longitudinalMeters: 1000)
+        mapView.setRegion(mapView.regionThatFits(zoomRegion), animated: true)
+    }
+    
+    func sightAnnotationAdded(annotation: SightAnnotation) {
+        sightList.append(annotation)
+        mapView.addAnnotation(annotation)
+    }
 
     /*
     // MARK: - Navigation
