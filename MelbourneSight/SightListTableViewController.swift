@@ -8,19 +8,21 @@
 
 import UIKit
 
-class SightListTableViewController: UITableViewController, UISearchResultsUpdating, AddSightDelegate {
-    @IBOutlet weak var sortSegmentedControl: UISegmentedControl!
+class SightListTableViewController: UITableViewController, UISearchResultsUpdating, DatabaseListener {
+    
+    var listenType = ListenerType.sight
     let SECTION_SIGHTS = 0
     let CELL_SIGHT = "sightCell"
     var allSights: [Sight] = []
     var filteredSights: [Sight] = []
-    weak var sightDelegate: AddSightDelegate?
-    var selectedSight: Sight?
+    weak var databaseController: DatabaseProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        filteredSights = allSights
+        // Get the database controller once from the App Delegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        databaseController = appDelegate.databaseController
         
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
@@ -32,10 +34,25 @@ class SightListTableViewController: UITableViewController, UISearchResultsUpdati
         definesPresentationContext = true
     }
     
+    @IBAction func sort(_ sender: Any) {
+        filteredSights.reverse()
+        tableView.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        databaseController?.addListener(listener: self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        databaseController?.removeListener(listener: self)
+    }
+    
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text, searchText.count > 0 {
             filteredSights = allSights.filter({(sight: Sight) -> Bool in
-                return sight.name.contains(searchText)
+                return (sight.name?.contains(searchText))!
             })
         } else {
             filteredSights = allSights
@@ -44,13 +61,11 @@ class SightListTableViewController: UITableViewController, UISearchResultsUpdati
         tableView.reloadData();
     }
     
-    func addSight(newSight: Sight) -> Bool {
-        allSights.append(newSight)
-        filteredSights.append(newSight)
-        tableView.beginUpdates()
-        tableView.insertRows(at:[IndexPath(row: filteredSights.count - 1, section: 0)], with: .automatic)
-        tableView.endUpdates()
-        return true
+    // MARK: - Database Listener
+    
+    func onSightsChange(change: DatabaseChange, sights: [Sight]) {
+        allSights = sights
+        updateSearchResults(for: navigationItem.searchController!)
     }
 
     // MARK: - Table view data source
@@ -70,6 +85,7 @@ class SightListTableViewController: UITableViewController, UISearchResultsUpdati
         let sight = filteredSights[indexPath.row]
         cell.nameLabel.text = sight.name
         cell.descLabel.text = sight.desc
+        cell.mapIconImageView.image = UIImage(named: sight.mapIcon!)
         
         return cell
     }
@@ -82,43 +98,16 @@ class SightListTableViewController: UITableViewController, UISearchResultsUpdati
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            self.filteredSights.remove(at:indexPath.row)
-            self.allSights.remove(at: indexPath.row)
-            tableView.deleteRows(at:[indexPath], with: .fade)
+            databaseController!.deleteSight(sight: filteredSights[indexPath.row])
         }
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedSight = filteredSights[indexPath.row]
-    }
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-        if segue.identifier == "addSightSegue" {
-            let destination = segue.destination as! AddSightViewController
-            destination.sightDelegate = self
-        } else {
-            let destination = segue.destination as! SightDetailViewController
-            destination.sight = selectedSight
+        if segue.identifier == "sightDetailSegue" {
+            let indexPath: NSIndexPath = self.tableView.indexPathForSelectedRow! as NSIndexPath
+            let sight = filteredSights[indexPath.row];
+            let destination = segue.destination as? SightDetailViewController
+            destination?.sight = sight
         }
     }
 }

@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import CoreData
 
-class AddSightViewController: UIViewController, UITextFieldDelegate {
+class AddSightViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    weak var sightDelegate: AddSightDelegate?
+    weak var databaseController: DatabaseProtocol?
+    
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var descTextField: UITextField!
     @IBOutlet weak var latitudeTextField: UITextField!
@@ -24,6 +26,10 @@ class AddSightViewController: UIViewController, UITextFieldDelegate {
         descTextField.delegate = self
         latitudeTextField.delegate = self
         longitudeTextField.delegate = self
+        
+        // Get the database controller once from the App Delegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        databaseController = appDelegate.databaseController
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -32,6 +38,15 @@ class AddSightViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func takePhoto(_ sender: Any) {
+        let controller = UIImagePickerController()
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            controller.sourceType = .camera
+        } else {
+            controller.sourceType = .photoLibrary
+        }
+        controller.allowsEditing = false
+        controller.delegate = self
+        self.present(controller, animated: true, completion: nil)
     }
     
     @IBAction func save(_ sender: Any) {
@@ -40,10 +55,24 @@ class AddSightViewController: UIViewController, UITextFieldDelegate {
             let desc = descTextField.text!
             guard let latitude = Double(latitudeTextField.text!) else { return }
             guard let longitude = Double(longitudeTextField.text!) else { return }
-            let mapIcon = String( mapIconSegmentedControl.selectedSegmentIndex)
-            let photo = ""
-            let newSight = Sight(name: name, desc: desc, latitude: latitude, longitude: longitude, mapIcon: mapIcon, photo: photo)
-            let _ = sightDelegate!.addSight(newSight: newSight)
+            
+            guard let image = photoImageView.image else {
+                displayMessage(title: "Cannot save until a photo has been taken!", message: "Error")
+                return
+            }
+            let date = UInt(Date().timeIntervalSince1970)
+            var data = Data()
+            data = image.jpegData(compressionQuality:0.8)!
+            let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+            let url = NSURL(fileURLWithPath: path)
+            if let pathComponent = url.appendingPathComponent("\(date)") {
+                let filePath = pathComponent.path as String
+                let fileManager = FileManager.default
+                fileManager.createFile(atPath: filePath, contents: data, attributes: nil)
+            }
+            let photo = "\(date)"
+            let mapIcon = "mapIcon_\(mapIconSegmentedControl.selectedSegmentIndex)"
+            let _ = databaseController!.addSight(name: name, desc: desc, latitude: latitude, longitude: longitude, mapIcon: mapIcon, photo: photo)
             navigationController?.popViewController(animated: true)
             return
         } else {
@@ -51,6 +80,17 @@ class AddSightViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let pickedImage = info[.originalImage] as? UIImage {
+            photoImageView.image = pickedImage
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        displayMessage(title: "There was an error in getting the image", message: "Error")
+    }
+        
     func displayMessage(title: String, message: String) {
         // Setup an alert to show user details about the Person
         // UIAlertController manages an alert instance

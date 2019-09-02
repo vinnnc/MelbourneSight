@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 
 class CoreDataController: NSObject, NSFetchedResultsControllerDelegate, DatabaseProtocol {
+  
     var listeners = MulticastDelegate<DatabaseListener>()
     var persistentContainer: NSPersistentContainer
     
@@ -25,10 +26,9 @@ class CoreDataController: NSObject, NSFetchedResultsControllerDelegate, Database
         
         super.init()
         
-        // If there are no sight in the database assume that the app is running
-        // for the first time. Initial sights.
 //        if fetchAllHeroes().count == 0 {
-//            createDefaultEntries() }
+//            createDefaultEntries()
+//        }
     }
     
     func saveContext() {
@@ -49,7 +49,6 @@ class CoreDataController: NSObject, NSFetchedResultsControllerDelegate, Database
         sight.longitude = longitude
         sight.mapIcon = mapIcon
         sight.photo = photo
-        
         saveContext()
         return sight
     }
@@ -93,8 +92,8 @@ class CoreDataController: NSObject, NSFetchedResultsControllerDelegate, Database
     
     // MARK: - Fetched Results Conttroller Delegate
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        listeners.invoke {
-            (listener) in listener.onSightsChange(change: .update, sights: fetchAllSights())
+        listeners.invoke {(listener) in
+            listener.onSightsChange(change: .update, sights: fetchAllSights())
         }
     }
 }

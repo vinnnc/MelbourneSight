@@ -8,37 +8,64 @@
 
 import UIKit
 import MapKit
+import CoreData
+import CoreLocation
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, MKMapViewDelegate {
+    
     @IBOutlet weak var mapView: MKMapView!
-    var sightList = [SightAnnotation]()
+    weak var databaseController: DatabaseProtocol?
+    var allSights: [Sight] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        databaseController = appDelegate.databaseController
+        mapView.delegate = self
+        viewLoadSetup()
     }
     
-    func focusOn(annotation: MKAnnotation) {
-        mapView.selectAnnotation(annotation, animated: true)
-        let zoomRegion = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: 1000,
-                                            longitudinalMeters: 1000)
-        mapView.setRegion(mapView.regionThatFits(zoomRegion), animated: true)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewLoadSetup()
     }
     
-    func sightAnnotationAdded(annotation: SightAnnotation) {
-        sightList.append(annotation)
-        mapView.addAnnotation(annotation)
+    func viewLoadSetup() {
+        let defaultRegion = MKCoordinateRegion(center: .init(latitude: -37.8136, longitude: 144.9631), latitudinalMeters: 4000, longitudinalMeters: 4000)
+        mapView.setRegion(mapView.regionThatFits(defaultRegion), animated: true)
+        addAnnotations()
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func addAnnotations() {
+        allSights = (databaseController?.fetchAllSights())!
+        for sight in allSights {
+            let annotation = SightAnnotation(newTitle: sight.name!, newSubtitle:  sight.desc!, latitude: sight.latitude, longitude: sight.longitude)
+            mapView.addAnnotation(annotation)
+            mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: NSStringFromClass(SightAnnotation.self))
+        }
     }
-    */
-
+    
+    // AnnotaionViewDelegate is learnt from Youtube
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "AnnotationView")
+        
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "AnnotationView")
+        }
+        
+        for sight in allSights {
+            if annotation.title == sight.name {
+                annotationView?.image = UIImage(named: sight.mapIcon!)
+            }
+        }
+        
+        annotationView?.canShowCallout = true
+        
+        return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        print("Annotation has been selected")
+    }
 }

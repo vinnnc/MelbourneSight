@@ -26,6 +26,7 @@ protocol DatabaseListener: AnyObject {
 protocol DatabaseProtocol: AnyObject {
     func addSight(name: String, desc: String, latitude: Double, longitude: Double, mapIcon: String, photo: String) -> Sight
     func deleteSight(sight: Sight)
+    func fetchAllSights() -> [Sight]
     func addListener(listener: DatabaseListener)
     func removeListener(listener: DatabaseListener)
 }
