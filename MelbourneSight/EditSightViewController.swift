@@ -35,7 +35,7 @@ class EditSightViewController: UIViewController, UITextFieldDelegate {
         descTextField.text = sight?.desc
         latitudeTextField.text = "\(sight?.latitude ?? 0)"
         longitudeTextField.text = "\(sight?.longitude ?? 0)"
-        mapIconSegmentedControl.selectedSegmentIndex = Int(sight!.mapIcon!) ?? 0
+        mapIconSegmentedControl.selectedSegmentIndex = Int(String(sight!.mapIcon!.last!))!
         photoImageView.image = loadImageData(fileName: sight!.photo!)
     }
     
@@ -107,12 +107,5 @@ class EditSightViewController: UIViewController, UITextFieldDelegate {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "editSightSegue" {
-            let destination = segue.destination as! SightDetailViewController
-            destination.sight = sight
-        }
     }
 }

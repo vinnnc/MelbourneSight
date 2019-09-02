@@ -32,14 +32,22 @@
                         <viewLayoutGuide key="safeArea" id="QTK-dX-fe7"/>
                     </view>
                     <navigationItem key="navigationItem" title="Melbourne Sight" id="ZY9-qF-FZf">
-                        <barButtonItem key="rightBarButtonItem" systemItem="bookmarks" id="WYk-6U-qCW">
-                            <connections>
-                                <segue destination="sTk-GP-7aJ" kind="show" identifier="sightListSegue" id="7XP-qg-CuP"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="bookmarks" id="WYk-6U-qCW">
+                                <connections>
+                                    <segue destination="sTk-GP-7aJ" kind="show" identifier="sightListSegue" id="7XP-qg-CuP"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="add" id="jLr-9x-Rhf">
+                                <connections>
+                                    <segue destination="xJs-Td-nSS" kind="show" id="axh-li-snZ"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="dVX-St-XHG" id="OOt-gV-g8A"/>
+                        <segue destination="vv2-6K-tz9" kind="show" identifier="sightDetailSegue" id="PQZ-WU-ahP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I9N-qg-Y5F" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -97,7 +105,6 @@
                                     <outlet property="descLabel" destination="7fP-bE-0Tr" id="zAT-Ia-9mQ"/>
                                     <outlet property="mapIconImageView" destination="RmL-bT-eWa" id="pSs-Kj-TQh"/>
                                     <outlet property="nameLabel" destination="8n6-fH-kza" id="zKv-dy-ugM"/>
-                                    <segue destination="vv2-6K-tz9" kind="show" identifier="sightDetailSegue" id="fjR-UK-Wak"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -107,23 +114,16 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Sight List" id="VXP-b0-VBO">
-                        <rightBarButtonItems>
-                            <barButtonItem systemItem="add" id="dC3-R7-klF">
-                                <connections>
-                                    <segue destination="xJs-Td-nSS" kind="show" identifier="addSightSegue" id="coj-wz-ncI"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="Sort" id="e4z-nV-aj2">
-                                <connections>
-                                    <action selector="sort:" destination="sTk-GP-7aJ" id="2lc-Ob-o8u"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <barButtonItem key="rightBarButtonItem" title="Sort" id="e4z-nV-aj2">
+                            <connections>
+                                <action selector="sort:" destination="sTk-GP-7aJ" id="2lc-Ob-o8u"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Meo-Xy-N2F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1859" y="-464"/>
+            <point key="canvasLocation" x="1080" y="-1162"/>
         </scene>
         <!--Sight Detail-->
         <scene sceneID="zE0-c9-Yje">
@@ -201,7 +201,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0mL-kU-ePq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1858" y="236"/>
+            <point key="canvasLocation" x="1080" y="236"/>
         </scene>
         <!--Edit Sight-->
         <scene sceneID="skF-uA-iLQ">
@@ -359,7 +359,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cqU-DF-27O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2629" y="236"/>
+            <point key="canvasLocation" x="1874" y="236"/>
         </scene>
         <!--Add Sight-->
         <scene sceneID="rwe-10-ObL">
@@ -516,7 +516,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LVe-zx-Hv3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2630" y="-464"/>
+            <point key="canvasLocation" x="1875" y="-464"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9c3-I8-ofm">

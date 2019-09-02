@@ -15,6 +15,7 @@ class SightListTableViewController: UITableViewController, UISearchResultsUpdati
     let CELL_SIGHT = "sightCell"
     var allSights: [Sight] = []
     var filteredSights: [Sight] = []
+    var selectedAnnotation: SightAnnotation?
     weak var databaseController: DatabaseProtocol?
     
     override func viewDidLoad() {
@@ -94,20 +95,17 @@ class SightListTableViewController: UITableViewController, UISearchResultsUpdati
         return true
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let sight = filteredSights[indexPath.row]
+        selectedAnnotation = SightAnnotation(newTitle: sight.name!, newSubtitle: sight.desc!, latitude: sight.latitude, longitude: sight.longitude)
+        navigationController?.popViewController(animated: true)
+    }
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
             databaseController!.deleteSight(sight: filteredSights[indexPath.row])
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "sightDetailSegue" {
-            let indexPath: NSIndexPath = self.tableView.indexPathForSelectedRow! as NSIndexPath
-            let sight = filteredSights[indexPath.row];
-            let destination = segue.destination as? SightDetailViewController
-            destination?.sight = sight
         }
     }
 }

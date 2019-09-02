@@ -11,18 +11,19 @@ import MapKit
 import CoreData
 import CoreLocation
 
-class HomeViewController: UIViewController, MKMapViewDelegate {
+class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     weak var databaseController: DatabaseProtocol?
+    var locationManager: CLLocationManager?
     var allSights: [Sight] = []
+    var selectedAnnotation: SightAnnotation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
-        mapView.delegate = self
         viewLoadSetup()
     }
     
@@ -35,6 +36,10 @@ class HomeViewController: UIViewController, MKMapViewDelegate {
         let defaultRegion = MKCoordinateRegion(center: .init(latitude: -37.8136, longitude: 144.9631), latitudinalMeters: 4000, longitudinalMeters: 4000)
         mapView.setRegion(mapView.regionThatFits(defaultRegion), animated: true)
         addAnnotations()
+        mapView.delegate = self
+        if selectedAnnotation != nil {
+            focusOn(annotation: selectedAnnotation!)
+        }
     }
     
     func addAnnotations() {
@@ -42,8 +47,21 @@ class HomeViewController: UIViewController, MKMapViewDelegate {
         for sight in allSights {
             let annotation = SightAnnotation(newTitle: sight.name!, newSubtitle:  sight.desc!, latitude: sight.latitude, longitude: sight.longitude)
             mapView.addAnnotation(annotation)
-            mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: NSStringFromClass(SightAnnotation.self))
+            
+            // Add geofence for each annotation
+            let geoLocation = CLCircularRegion(center: annotation.coordinate, radius: 500, identifier: annotation.title!)
+            geoLocation.notifyOnExit = true
+            locationManager?.delegate = self
+            locationManager?.requestAlwaysAuthorization()
+            locationManager?.startMonitoring(for: geoLocation)
         }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+        let alert = UIAlertController(title: "Movement Detected!", message: "You have left \(region.identifier)", preferredStyle:
+            .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     // AnnotaionViewDelegate is learnt from Youtube
@@ -61,11 +79,38 @@ class HomeViewController: UIViewController, MKMapViewDelegate {
         }
         
         annotationView?.canShowCallout = true
+        let rightButton = UIButton(type: .detailDisclosure)
+        annotationView?.rightCalloutAccessoryView = rightButton
         
         return annotationView
     }
     
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        print("Annotation has been selected")
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        if control == view.rightCalloutAccessoryView {
+            for sight in allSights {
+                if view.annotation?.title == sight.name {
+                    performSegue(withIdentifier: "sightDetailSegue", sender: sight)
+                    return
+                }
+            }
+        }
+    }
+    
+    func focusOn(annotation: MKAnnotation) {
+        mapView.selectAnnotation(annotation, animated: true)
+        let zoomRegion = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: 1000,
+                                            longitudinalMeters: 1000)
+        mapView.setRegion(mapView.regionThatFits(zoomRegion), animated: true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "sightListSegue" {
+            let destination = segue.destination as! SightListTableViewController
+            destination.selectedAnnotation = selectedAnnotation
+        }
+        if segue.identifier == "sightDetailSegue" {
+            let destination = segue.destination as! SightDetailViewController
+            destination.sight = sender as? Sight
+        }
     }
 }
