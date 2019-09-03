@@ -11,19 +11,22 @@ import MapKit
 import CoreData
 import CoreLocation
 
-class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, SightDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     weak var databaseController: DatabaseProtocol?
     var locationManager: CLLocationManager?
     var allSights: [Sight] = []
-    var selectedAnnotation: SightAnnotation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
+        mapView.delegate = self
+        let defaultRegion = MKCoordinateRegion(center: .init(latitude: -37.8136, longitude: 144.9631), latitudinalMeters: 4000, longitudinalMeters: 4000)
+        mapView.setRegion(mapView.regionThatFits(defaultRegion), animated: true)
+        
         viewLoadSetup()
     }
     
@@ -33,13 +36,7 @@ class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManager
     }
     
     func viewLoadSetup() {
-        let defaultRegion = MKCoordinateRegion(center: .init(latitude: -37.8136, longitude: 144.9631), latitudinalMeters: 4000, longitudinalMeters: 4000)
-        mapView.setRegion(mapView.regionThatFits(defaultRegion), animated: true)
         addAnnotations()
-        mapView.delegate = self
-        if selectedAnnotation != nil {
-            focusOn(annotation: selectedAnnotation!)
-        }
     }
     
     func addAnnotations() {
@@ -72,15 +69,20 @@ class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManager
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "AnnotationView")
         }
         
+        let leftImageView = UIImageView.init(frame: CGRect(x: 50, y: 50, width: 50, height: 50))
+        
         for sight in allSights {
             if annotation.title == sight.name {
                 annotationView?.image = UIImage(named: sight.mapIcon!)
+                leftImageView.image = loadImageData(fileName: sight.photo!)
+                break
             }
         }
         
         annotationView?.canShowCallout = true
         let rightButton = UIButton(type: .detailDisclosure)
         annotationView?.rightCalloutAccessoryView = rightButton
+        annotationView?.leftCalloutAccessoryView = leftImageView
         
         return annotationView
     }
@@ -98,19 +100,34 @@ class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManager
     
     func focusOn(annotation: MKAnnotation) {
         mapView.selectAnnotation(annotation, animated: true)
-        let zoomRegion = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: 1000,
-                                            longitudinalMeters: 1000)
+        let zoomRegion = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
         mapView.setRegion(mapView.regionThatFits(zoomRegion), animated: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "sightListSegue" {
             let destination = segue.destination as! SightListTableViewController
-            destination.selectedAnnotation = selectedAnnotation
+            destination.delegate = self
         }
         if segue.identifier == "sightDetailSegue" {
             let destination = segue.destination as! SightDetailViewController
             destination.sight = sender as? Sight
         }
+    }
+    
+    func loadImageData(fileName: String) -> UIImage? {
+        if fileName.hasPrefix("default_") {
+            return UIImage(named: fileName)
+        }
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+        let url = NSURL(fileURLWithPath: path)
+        var image: UIImage?
+        if let pathComponent = url.appendingPathComponent(fileName) {
+            let filePath = pathComponent.path
+            let fileManager = FileManager.default
+            let fileData = fileManager.contents(atPath: filePath)
+            image = UIImage(data: fileData!)
+        }
+        return image
     }
 }

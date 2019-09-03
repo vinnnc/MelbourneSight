@@ -9,21 +9,25 @@
 import UIKit
 import MapKit
 
-class SightDetailViewController: UIViewController {
+class SightDetailViewController: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var mapIconImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var descLabel: UILabel!
     @IBOutlet weak var photoImageView: UIImageView!
-    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var locationMapView: MKMapView!
     var sight: Sight?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationMapView.delegate = self
         viewLoadSetup()
     }
     
     func loadImageData(fileName: String) -> UIImage? {
+        if fileName.hasPrefix("default_") {
+            return UIImage(named: fileName)
+        }
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
         let url = NSURL(fileURLWithPath: path)
         var image: UIImage?
@@ -46,7 +50,29 @@ class SightDetailViewController: UIViewController {
         nameLabel.text = sight?.name
         descLabel.text = sight?.desc
         photoImageView.image = loadImageData(fileName: sight!.photo!)
-        locationLabel.text = "\(sight?.latitude ?? 0); \(sight?.longitude ?? 0)"
+        let annotation = SightAnnotation(newTitle: sight!.name!, newSubtitle: sight!.desc!, latitude: sight!.latitude, longitude: sight!.longitude)
+        locationMapView.addAnnotation(annotation)
+        focusOn(annotation: annotation)
+    }
+    
+    func focusOn(annotation: MKAnnotation) {
+        locationMapView.selectAnnotation(annotation, animated: true)
+        let zoomRegion = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
+        locationMapView.setRegion(locationMapView.regionThatFits(zoomRegion), animated: true)
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "AnnotationView")
+        
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "AnnotationView")
+        }
+        
+        if annotation.title == sight?.name {
+            annotationView?.image = UIImage(named: sight!.mapIcon!)
+        }
+        
+        return annotationView
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

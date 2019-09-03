@@ -19,21 +19,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="dVX-St-XHG">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="QTK-dX-fe7" firstAttribute="trailing" secondItem="dVX-St-XHG" secondAttribute="trailing" id="0Zr-Sq-Mbn"/>
-                            <constraint firstItem="QTK-dX-fe7" firstAttribute="bottom" secondItem="dVX-St-XHG" secondAttribute="bottom" id="OtL-1A-qxE"/>
-                            <constraint firstItem="dVX-St-XHG" firstAttribute="leading" secondItem="QTK-dX-fe7" secondAttribute="leading" id="TOw-bs-pkx"/>
-                            <constraint firstItem="dVX-St-XHG" firstAttribute="top" secondItem="QTK-dX-fe7" secondAttribute="top" id="hbk-Ag-fci"/>
+                            <constraint firstAttribute="bottom" secondItem="dVX-St-XHG" secondAttribute="bottom" id="G0N-p2-dyE"/>
+                            <constraint firstItem="dVX-St-XHG" firstAttribute="leading" secondItem="QTK-dX-fe7" secondAttribute="leading" id="SPX-Ez-mj6"/>
+                            <constraint firstItem="dVX-St-XHG" firstAttribute="trailing" secondItem="QTK-dX-fe7" secondAttribute="trailing" id="WWB-qZ-EGp"/>
+                            <constraint firstItem="dVX-St-XHG" firstAttribute="top" secondItem="QTK-dX-fe7" secondAttribute="top" id="bbj-KU-8S2"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="QTK-dX-fe7"/>
                     </view>
                     <navigationItem key="navigationItem" title="Melbourne Sight" id="ZY9-qF-FZf">
                         <rightBarButtonItems>
-                            <barButtonItem systemItem="bookmarks" id="WYk-6U-qCW">
+                            <barButtonItem systemItem="search" id="WYk-6U-qCW">
                                 <connections>
                                     <segue destination="sTk-GP-7aJ" kind="show" identifier="sightListSegue" id="7XP-qg-CuP"/>
                                 </connections>
@@ -158,12 +158,18 @@
                                     <constraint firstAttribute="width" secondItem="ICG-gz-edx" secondAttribute="height" multiplier="15:8" id="WkU-AK-ihV"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1iL-Cv-bhT">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1iL-Cv-bhT">
                                 <rect key="frame" x="16" y="416.5" width="382" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="XKX-4j-r5p">
+                                <rect key="frame" x="16" y="453.5" width="382" height="204"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="XKX-4j-r5p" secondAttribute="height" multiplier="15:8" id="v5H-Rm-r6f"/>
+                                </constraints>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -175,12 +181,15 @@
                             <constraint firstItem="ibd-Ng-Oek" firstAttribute="leading" secondItem="QaR-im-A7q" secondAttribute="leading" constant="16" id="iof-bA-GFb"/>
                             <constraint firstItem="ICG-gz-edx" firstAttribute="top" secondItem="ibd-Ng-Oek" secondAttribute="bottom" constant="16" id="j8K-I3-BtL"/>
                             <constraint firstItem="1iL-Cv-bhT" firstAttribute="top" secondItem="ICG-gz-edx" secondAttribute="bottom" constant="16" id="jcm-md-HBN"/>
+                            <constraint firstItem="XKX-4j-r5p" firstAttribute="top" secondItem="1iL-Cv-bhT" secondAttribute="bottom" constant="16" id="lC2-JP-Wcm"/>
                             <constraint firstItem="NtS-lm-MbY" firstAttribute="leading" secondItem="QaR-im-A7q" secondAttribute="leading" constant="16" id="o7X-U0-Mai"/>
                             <constraint firstItem="ibd-Ng-Oek" firstAttribute="top" secondItem="NtS-lm-MbY" secondAttribute="bottom" constant="16" id="ox9-tB-Wmk"/>
                             <constraint firstItem="QaR-im-A7q" firstAttribute="trailing" secondItem="1iL-Cv-bhT" secondAttribute="trailing" constant="16" id="pPQ-x4-Kim"/>
                             <constraint firstItem="NtS-lm-MbY" firstAttribute="top" secondItem="QaR-im-A7q" secondAttribute="top" constant="16" id="ql5-8h-agc"/>
                             <constraint firstItem="MUA-eM-gEt" firstAttribute="top" secondItem="QaR-im-A7q" secondAttribute="top" constant="16" id="qlJ-xD-1hF"/>
                             <constraint firstItem="ICG-gz-edx" firstAttribute="leading" secondItem="QaR-im-A7q" secondAttribute="leading" constant="16" id="slc-ng-Zy3"/>
+                            <constraint firstItem="XKX-4j-r5p" firstAttribute="leading" secondItem="QaR-im-A7q" secondAttribute="leading" constant="16" id="yAw-R3-JBJ"/>
+                            <constraint firstItem="QaR-im-A7q" firstAttribute="trailing" secondItem="XKX-4j-r5p" secondAttribute="trailing" constant="16" id="ydU-bu-4nn"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="QaR-im-A7q"/>
                     </view>
@@ -193,7 +202,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="descLabel" destination="ibd-Ng-Oek" id="mSX-r5-D4Q"/>
-                        <outlet property="locationLabel" destination="1iL-Cv-bhT" id="7qD-EF-jdu"/>
+                        <outlet property="locationMapView" destination="XKX-4j-r5p" id="m9k-qc-Q4K"/>
                         <outlet property="mapIconImageView" destination="NtS-lm-MbY" id="yps-nX-OrT"/>
                         <outlet property="nameLabel" destination="MUA-eM-gEt" id="Bm9-ze-2oV"/>
                         <outlet property="photoImageView" destination="ICG-gz-edx" id="Ao0-ZS-Kee"/>

@@ -15,8 +15,8 @@ class SightListTableViewController: UITableViewController, UISearchResultsUpdati
     let CELL_SIGHT = "sightCell"
     var allSights: [Sight] = []
     var filteredSights: [Sight] = []
-    var selectedAnnotation: SightAnnotation?
     weak var databaseController: DatabaseProtocol?
+    var delegate: SightDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,7 +97,8 @@ class SightListTableViewController: UITableViewController, UISearchResultsUpdati
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let sight = filteredSights[indexPath.row]
-        selectedAnnotation = SightAnnotation(newTitle: sight.name!, newSubtitle: sight.desc!, latitude: sight.latitude, longitude: sight.longitude)
+        let selectedAnnotation = SightAnnotation(newTitle: sight.name!, newSubtitle: sight.desc!, latitude: sight.latitude, longitude: sight.longitude)
+        delegate?.focusOn(annotation: selectedAnnotation)
         navigationController?.popViewController(animated: true)
     }
     

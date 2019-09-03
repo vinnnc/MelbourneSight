@@ -89,6 +89,9 @@ class EditSightViewController: UIViewController, UITextFieldDelegate {
     }
     
     func loadImageData(fileName: String) -> UIImage? {
+        if fileName.hasPrefix("default_") {
+            return UIImage(named: fileName)
+        }
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
         let url = NSURL(fileURLWithPath: path)
         var image: UIImage?
