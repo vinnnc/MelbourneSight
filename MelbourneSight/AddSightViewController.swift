@@ -8,10 +8,12 @@
 
 import UIKit
 import CoreData
+import MapKit
 
 class AddSightViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     weak var databaseController: DatabaseProtocol?
+    var currentLocation: CLLocationCoordinate2D?
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var descTextField: UITextField!
@@ -35,6 +37,18 @@ class AddSightViewController: UIViewController, UITextFieldDelegate, UIImagePick
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    @IBAction func useCurrentLocation(_ sender: Any) {
+        if let currentLocation = currentLocation {
+            latitudeTextField.text = "\(currentLocation.latitude)"
+            longitudeTextField.text = "\(currentLocation.longitude)"
+        }
+        else {
+            let alertController = UIAlertController(title: "Location Not Found", message: "The location has not yet been determined.", preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                present(alertController, animated: true, completion: nil)
+        }
     }
     
     @IBAction func takePhoto(_ sender: Any) {

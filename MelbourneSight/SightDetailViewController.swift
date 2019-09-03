@@ -13,9 +13,9 @@ class SightDetailViewController: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var mapIconImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var descLabel: UILabel!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var locationMapView: MKMapView!
+    @IBOutlet weak var descTextView: UITextView!
     var sight: Sight?
     
     override func viewDidLoad() {
@@ -48,7 +48,7 @@ class SightDetailViewController: UIViewController, MKMapViewDelegate {
     func viewLoadSetup() {
         mapIconImageView.image = UIImage(named: sight!.mapIcon!)
         nameLabel.text = sight?.name
-        descLabel.text = sight?.desc
+        descTextView.text = sight?.desc
         photoImageView.image = loadImageData(fileName: sight!.photo!)
         let annotation = SightAnnotation(newTitle: sight!.name!, newSubtitle: sight!.desc!, latitude: sight!.latitude, longitude: sight!.longitude)
         locationMapView.addAnnotation(annotation)

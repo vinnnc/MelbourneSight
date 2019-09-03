@@ -24,6 +24,7 @@ class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
         mapView.delegate = self
+        locationManager?.requestAlwaysAuthorization()
         let defaultRegion = MKCoordinateRegion(center: .init(latitude: -37.8136, longitude: 144.9631), latitudinalMeters: 4000, longitudinalMeters: 4000)
         mapView.setRegion(mapView.regionThatFits(defaultRegion), animated: true)
         
@@ -49,7 +50,6 @@ class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManager
             let geoLocation = CLCircularRegion(center: annotation.coordinate, radius: 500, identifier: annotation.title!)
             geoLocation.notifyOnExit = true
             locationManager?.delegate = self
-            locationManager?.requestAlwaysAuthorization()
             locationManager?.startMonitoring(for: geoLocation)
         }
     }

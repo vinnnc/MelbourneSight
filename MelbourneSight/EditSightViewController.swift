@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MapKit
 
-class EditSightViewController: UIViewController, UITextFieldDelegate {
+class EditSightViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var descTextField: UITextField!
@@ -19,6 +20,8 @@ class EditSightViewController: UIViewController, UITextFieldDelegate {
     var sight: Sight?
     weak var databaseController: DatabaseProtocol?
     var viewController: UIViewController?
+    var currentLocation: CLLocationCoordinate2D?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +47,27 @@ class EditSightViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    @IBAction func useCurrentLocation(_ sender: Any) {
+        if let currentLocation = currentLocation {
+            latitudeTextField.text = "\(currentLocation.latitude)"
+            longitudeTextField.text = "\(currentLocation.longitude)"
+        } else {
+            let alertController = UIAlertController(title: "Location Not Found", message: "The location has not yet been determined.", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                present(alertController, animated: true, completion: nil)
+        }
+    }
+    
     @IBAction func takePhoto(_ sender: Any) {
+        let controller = UIImagePickerController()
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            controller.sourceType = .camera
+        } else {
+            controller.sourceType = .photoLibrary
+        }
+        controller.allowsEditing = false
+        controller.delegate = self
+        self.present(controller, animated: true, completion: nil)
     }
     
     @IBAction func save(_ sender: Any) {
@@ -102,6 +125,17 @@ class EditSightViewController: UIViewController, UITextFieldDelegate {
             image = UIImage(data: fileData!)
         }
         return image
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let pickedImage = info[.originalImage] as? UIImage {
+            photoImageView.image = pickedImage
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        displayMessage(title: "There was an error in getting the image", message: "Error")
     }
     
     func displayMessage(title: String, message: String) {
