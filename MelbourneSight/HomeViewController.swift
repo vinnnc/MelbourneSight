@@ -15,7 +15,7 @@ class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManager
     
     @IBOutlet weak var mapView: MKMapView!
     weak var databaseController: DatabaseProtocol?
-    var locationManager: CLLocationManager?
+    var locationManager: CLLocationManager = CLLocationManager()
     var allSights: [Sight] = []
     
     override func viewDidLoad() {
@@ -23,8 +23,11 @@ class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         // Do any additional setup after loading the view.
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
+        
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
         mapView.delegate = self
-        locationManager?.requestAlwaysAuthorization()
+        
         let defaultRegion = MKCoordinateRegion(center: .init(latitude: -37.8136, longitude: 144.9631), latitudinalMeters: 4000, longitudinalMeters: 4000)
         mapView.setRegion(mapView.regionThatFits(defaultRegion), animated: true)
         
@@ -44,18 +47,26 @@ class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         allSights = (databaseController?.fetchAllSights())!
         for sight in allSights {
             let annotation = SightAnnotation(newTitle: sight.name!, newSubtitle:  sight.desc!, latitude: sight.latitude, longitude: sight.longitude)
+            mapView.removeAnnotation(annotation)
             mapView.addAnnotation(annotation)
             
             // Add geofence for each annotation
             let geoLocation = CLCircularRegion(center: annotation.coordinate, radius: 500, identifier: annotation.title!)
             geoLocation.notifyOnExit = true
-            locationManager?.delegate = self
-            locationManager?.startMonitoring(for: geoLocation)
+            geoLocation.notifyOnEntry = true
+            locationManager.startMonitoring(for: geoLocation)
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
         let alert = UIAlertController(title: "Movement Detected!", message: "You have left \(region.identifier)", preferredStyle:
+            .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        let alert = UIAlertController(title: "Movement Detected!", message: "You have entered \(region.identifier)", preferredStyle:
             .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
@@ -99,7 +110,6 @@ class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManager
     }
     
     func focusOn(annotation: MKAnnotation) {
-        mapView.selectAnnotation(annotation, animated: true)
         let zoomRegion = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
         mapView.setRegion(mapView.regionThatFits(zoomRegion), animated: true)
     }

@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class EditSightViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class EditSightViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate {
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var descTextField: UITextField!
@@ -17,10 +17,12 @@ class EditSightViewController: UIViewController, UITextFieldDelegate, UIImagePic
     @IBOutlet weak var longitudeTextField: UITextField!
     @IBOutlet weak var mapIconSegmentedControl: UISegmentedControl!
     @IBOutlet weak var photoImageView: UIImageView!
+    
     var sight: Sight?
     weak var databaseController: DatabaseProtocol?
     var viewController: UIViewController?
     var currentLocation: CLLocationCoordinate2D?
+    var locationManager: CLLocationManager = CLLocationManager()
 
     
     override func viewDidLoad() {
@@ -40,11 +42,31 @@ class EditSightViewController: UIViewController, UITextFieldDelegate, UIImagePic
         longitudeTextField.text = "\(sight?.longitude ?? 0)"
         mapIconSegmentedControl.selectedSegmentIndex = Int(String(sight!.mapIcon!.last!))!
         photoImageView.image = loadImageData(fileName: sight!.photo!)
+        
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.distanceFilter = 10
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        locationManager.startUpdatingLocation()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        locationManager.stopUpdatingLocation()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location = locations.last!
+        currentLocation = location.coordinate
     }
     
     @IBAction func useCurrentLocation(_ sender: Any) {
