@@ -10,5 +10,6 @@ import Foundation
 import MapKit
 
 protocol SightDelegate: AnyObject {
-    func focusOn(annotation: MKAnnotation)
+    func focusOn(name: String)
+    func removeAnnotation(name: String)
 }

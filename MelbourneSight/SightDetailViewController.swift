@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class SightDetailViewController: UIViewController, MKMapViewDelegate {
+class SightDetailViewController: UIViewController, MKMapViewDelegate, SightDelegate {
 
     @IBOutlet weak var mapIconImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -17,6 +17,7 @@ class SightDetailViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var locationMapView: MKMapView!
     @IBOutlet weak var descTextView: UITextView!
     var sight: Sight?
+    var delegate: SightDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,4 +83,10 @@ class SightDetailViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    func focusOn(name: String) {
+    }
+    
+    func removeAnnotation(name: String) {
+        delegate?.removeAnnotation(name: name)
+    }
 }

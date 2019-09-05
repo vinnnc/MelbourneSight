@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class EditSightViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate {
+class EditSightViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate, SightDelegate {
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var descTextField: UITextField!
@@ -23,6 +23,7 @@ class EditSightViewController: UIViewController, UITextFieldDelegate, UIImagePic
     var viewController: UIViewController?
     var currentLocation: CLLocationCoordinate2D?
     var locationManager: CLLocationManager = CLLocationManager()
+    var delegate: SightDelegate?
 
     
     override func viewDidLoad() {
@@ -93,11 +94,22 @@ class EditSightViewController: UIViewController, UITextFieldDelegate, UIImagePic
     }
     
     @IBAction func save(_ sender: Any) {
-        if nameTextField.text != "" && descTextField.text != "" && latitudeTextField.text != "" && longitudeTextField.text != "" {
+        if nameTextField.text != "" && descTextField.text != "" && latitudeTextField.text != "" && longitudeTextField.text != "" && photoImageView.image != nil {
+            if nameTextField.text! != sight?.name && isDuplicate(name: nameTextField.text!) {
+                displayMessage(title: "\(nameTextField.text!) is exist", message: "Please Change another name")
+                return
+            }
+            
             let name = nameTextField.text!
             let desc = descTextField.text!
-            guard let latitude = Double(latitudeTextField.text!) else { return }
-            guard let longitude = Double(longitudeTextField.text!) else { return }
+            guard let latitude = Double(latitudeTextField.text!) else {
+                displayMessage(title: "Latitude is invalid", message: "Latitude must be decimal number")
+                return
+            }
+            guard let longitude = Double(longitudeTextField.text!) else {
+                displayMessage(title: "Latitude is invalid", message: "Latitude must be decimal number")
+                return
+            }
             
             guard let image = photoImageView.image else {
                 displayMessage(title: "Cannot save until a photo has been taken!", message: "Error")
@@ -114,9 +126,8 @@ class EditSightViewController: UIViewController, UITextFieldDelegate, UIImagePic
                 fileManager.createFile(atPath: filePath, contents: data, attributes: nil)
             }
             let photo = "\(date)"
-            
             let mapIcon = "mapIcon_\(mapIconSegmentedControl.selectedSegmentIndex)"
-            databaseController!.deleteSight(sight: sight!)
+            removeSight(name: sight!.name!)
             let _ = databaseController!.addSight(name: name, desc: desc, latitude: latitude, longitude: longitude, mapIcon: mapIcon, photo: photo)
             
             sight?.name = name
@@ -125,12 +136,28 @@ class EditSightViewController: UIViewController, UITextFieldDelegate, UIImagePic
             sight?.longitude = longitude
             sight?.mapIcon = mapIcon
             sight?.photo = photo
-            
+
             navigationController?.popViewController(animated: true)
             return
-        } else {
-            displayMessage(title: "Not all fields filled", message: "Please fill all information.")
         }
+        
+        var errorMessage = "Please ensure all fields are filled:\n"
+        if nameTextField.text == "" {
+            errorMessage += "- Must provide name\n"
+        }
+        if descTextField.text == "" {
+            errorMessage += "- Must provide description\n"
+        }
+        if latitudeTextField.text == "" {
+            errorMessage += "- Must provide latitude\n"
+        }
+        if longitudeTextField.text == "" {
+            errorMessage += "- Must provide longitude\n"
+        }
+        if photoImageView.image == nil {
+            errorMessage += "- Must provide a photo"
+        }
+        displayMessage(title: "Not all fields filled", message: errorMessage)
     }
     
     func loadImageData(fileName: String) -> UIImage? {
@@ -147,6 +174,27 @@ class EditSightViewController: UIViewController, UITextFieldDelegate, UIImagePic
             image = UIImage(data: fileData!)
         }
         return image
+    }
+    
+    func isDuplicate(name: String) -> Bool {
+        let allSights = databaseController?.fetchAllSights()
+        for sight in allSights! {
+            if sight.name == name {
+                return true
+            }
+        }
+        return false
+    }
+    
+    func removeSight(name: String) {
+        let allSights = databaseController?.fetchAllSights()
+        for sight in allSights! {
+            if sight.name == name {
+                removeAnnotation(name: sight.name!)
+                databaseController?.deleteSight(sight: sight)
+                return
+            }
+        }
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -166,5 +214,12 @@ class EditSightViewController: UIViewController, UITextFieldDelegate, UIImagePic
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func focusOn(name: String) {
+    }
+    
+    func removeAnnotation(name: String) {
+        delegate?.removeAnnotation(name: name)
     }
 }

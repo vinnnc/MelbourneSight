@@ -17,6 +17,7 @@ class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManager
     weak var databaseController: DatabaseProtocol?
     var locationManager: CLLocationManager = CLLocationManager()
     var allSights: [Sight] = []
+    var allAnnotations: [SightAnnotation] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,24 +32,21 @@ class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         let defaultRegion = MKCoordinateRegion(center: .init(latitude: -37.8136, longitude: 144.9631), latitudinalMeters: 4000, longitudinalMeters: 4000)
         mapView.setRegion(mapView.regionThatFits(defaultRegion), animated: true)
         
-        viewLoadSetup()
+        addAnnotations()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewLoadSetup()
-    }
-    
-    func viewLoadSetup() {
         addAnnotations()
     }
     
     func addAnnotations() {
+        mapView.removeAnnotations(mapView.annotations)
+        
         allSights = (databaseController?.fetchAllSights())!
         for sight in allSights {
             let annotation = SightAnnotation(newTitle: sight.name!, newSubtitle:  sight.desc!, latitude: sight.latitude, longitude: sight.longitude)
-            mapView.removeAnnotation(annotation)
-            mapView.addAnnotation(annotation)
+            allAnnotations.append(annotation)
             
             // Add geofence for each annotation
             let geoLocation = CLCircularRegion(center: annotation.coordinate, radius: 500, identifier: annotation.title!)
@@ -56,6 +54,7 @@ class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManager
             geoLocation.notifyOnEntry = true
             locationManager.startMonitoring(for: geoLocation)
         }
+        mapView.addAnnotations(allAnnotations)
     }
     
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
@@ -81,7 +80,7 @@ class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         }
         
         let leftImageView = UIImageView.init(frame: CGRect(x: 50, y: 50, width: 50, height: 50))
-        
+
         for sight in allSights {
             if annotation.title == sight.name {
                 annotationView?.image = UIImage(named: sight.mapIcon!)
@@ -109,9 +108,28 @@ class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         }
     }
     
-    func focusOn(annotation: MKAnnotation) {
-        let zoomRegion = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
-        mapView.setRegion(mapView.regionThatFits(zoomRegion), animated: true)
+    func focusOn(name: String) {
+        for annotation in allAnnotations {
+            if annotation.title == name {
+                mapView.selectAnnotation(annotation, animated: true)
+                let zoomRegion = MKCoordinateRegion(center: annotation.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
+                mapView.setRegion(mapView.regionThatFits(zoomRegion), animated: true)
+                return
+            }
+        }
+    }
+    
+    func removeAnnotation(name: String) {
+        for index in 0...allAnnotations.count {
+            let annotation = allAnnotations[index]
+            if annotation.title == name {
+                allAnnotations.remove(at: index)
+                mapView.removeAnnotation(annotation)
+                let geoLocation = CLCircularRegion(center: annotation.coordinate, radius: 500, identifier: annotation.title!)
+                locationManager.stopMonitoring(for: geoLocation)
+                return
+            }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -97,8 +97,7 @@ class SightListTableViewController: UITableViewController, UISearchResultsUpdati
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let sight = filteredSights[indexPath.row]
-        let selectedAnnotation = SightAnnotation(newTitle: sight.name!, newSubtitle: sight.desc!, latitude: sight.latitude, longitude: sight.longitude)
-        delegate?.focusOn(annotation: selectedAnnotation)
+        delegate?.focusOn(name: sight.name!)
         navigationController?.popViewController(animated: true)
     }
     
@@ -106,7 +105,9 @@ class SightListTableViewController: UITableViewController, UISearchResultsUpdati
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            databaseController!.deleteSight(sight: filteredSights[indexPath.row])
+            let sight = filteredSights[indexPath.row]
+            delegate?.removeAnnotation(name: sight.name!)
+            databaseController!.deleteSight(sight: sight)
         }
     }
 }

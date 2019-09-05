@@ -85,11 +85,22 @@ class AddSightViewController: UIViewController, UITextFieldDelegate, UIImagePick
     }
     
     @IBAction func save(_ sender: Any) {
-        if nameTextField.text != "" && descTextField.text != "" && latitudeTextField.text != "" && longitudeTextField.text != "" {
+        if nameTextField.text != "" && descTextField.text != "" && latitudeTextField.text != "" && longitudeTextField.text != "" && photoImageView.image != nil {
+            if isDuplicate(name: nameTextField.text!) {
+                displayMessage(title: "\(nameTextField.text!) is exist", message: "Please Change another name")
+                return
+            }
+            
             let name = nameTextField.text!
             let desc = descTextField.text!
-            guard let latitude = Double(latitudeTextField.text!) else { return }
-            guard let longitude = Double(longitudeTextField.text!) else { return }
+            guard let latitude = Double(latitudeTextField.text!) else {
+                displayMessage(title: "Latitude is invalid", message: "Latitude must be decimal number")
+                return
+            }
+            guard let longitude = Double(longitudeTextField.text!) else {
+                displayMessage(title: "Latitude is invalid", message: "Latitude must be decimal number")
+                return
+            }
             
             guard let image = photoImageView.image else {
                 displayMessage(title: "Cannot save until a photo has been taken!", message: "Error")
@@ -110,9 +121,35 @@ class AddSightViewController: UIViewController, UITextFieldDelegate, UIImagePick
             let _ = databaseController!.addSight(name: name, desc: desc, latitude: latitude, longitude: longitude, mapIcon: mapIcon, photo: photo)
             navigationController?.popViewController(animated: true)
             return
-        } else {
-            displayMessage(title: "Not all fields filled", message: "Please fill all information.")
         }
+        
+        var errorMessage = "Please ensure all fields are filled:\n"
+        if nameTextField.text == "" {
+            errorMessage += "- Must provide name\n"
+        }
+        if descTextField.text == "" {
+            errorMessage += "- Must provide description\n"
+        }
+        if latitudeTextField.text == "" {
+            errorMessage += "- Must provide latitude\n"
+        }
+        if longitudeTextField.text == "" {
+            errorMessage += "- Must provide longitude\n"
+        }
+        if photoImageView.image == nil {
+            errorMessage += "- Must provide a photo"
+        }
+        displayMessage(title: "Not all fields filled", message: errorMessage)
+    }
+    
+    func isDuplicate(name: String) -> Bool {
+        let allSights = databaseController?.fetchAllSights()
+        for sight in allSights! {
+            if sight.name == name {
+                return true
+            }
+        }
+        return false
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
