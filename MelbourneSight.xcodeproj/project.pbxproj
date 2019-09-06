@@ -25,6 +25,7 @@
 		9B49B5D8231A324500A6AB22 /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B49B5D7231A324500A6AB22 /* CoreDataController.swift */; };
 		9B49B5DA231A364400A6AB22 /* MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B49B5D9231A364400A6AB22 /* MulticastDelegate.swift */; };
 		9BB64178231E665000F0B14E /* SightDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB64177231E665000F0B14E /* SightDelegate.swift */; };
+		9BF8F1C02321485000A140C0 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BF8F1BF2321485000A140C0 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,8 @@
 		9B49B5D7231A324500A6AB22 /* CoreDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataController.swift; sourceTree = "<group>"; };
 		9B49B5D9231A364400A6AB22 /* MulticastDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MulticastDelegate.swift; sourceTree = "<group>"; };
 		9BB64177231E665000F0B14E /* SightDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SightDelegate.swift; sourceTree = "<group>"; };
+		9BF8F1B9232147E800A140C0 /* MelbourneSight.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MelbourneSight.entitlements; sourceTree = "<group>"; };
+		9BF8F1BF2321485000A140C0 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9BF8F1C02321485000A140C0 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,6 +70,7 @@
 			children = (
 				9B49B5A623192C5100A6AB22 /* MelbourneSight */,
 				9B49B5A523192C5100A6AB22 /* Products */,
+				9BF8F1BA232147F500A140C0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -80,6 +85,7 @@
 		9B49B5A623192C5100A6AB22 /* MelbourneSight */ = {
 			isa = PBXGroup;
 			children = (
+				9BF8F1B9232147E800A140C0 /* MelbourneSight.entitlements */,
 				9B49B5C12319343D00A6AB22 /* AddSightViewController.swift */,
 				9B49B5A723192C5100A6AB22 /* AppDelegate.swift */,
 				9B49B5AE23192C5200A6AB22 /* Assets.xcassets */,
@@ -119,6 +125,14 @@
 			path = Database;
 			sourceTree = "<group>";
 		};
+		9BF8F1BA232147F500A140C0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9BF8F1BF2321485000A140C0 /* MapKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -151,6 +165,17 @@
 				TargetAttributes = {
 					9B49B5A323192C5100A6AB22 = {
 						CreatedOnToolsVersion = 10.3;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -350,7 +375,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MelbourneSight/MelbourneSight.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BA543NG78K;
 				INFOPLIST_FILE = MelbourneSight/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -367,7 +394,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MelbourneSight/MelbourneSight.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BA543NG78K;
 				INFOPLIST_FILE = MelbourneSight/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

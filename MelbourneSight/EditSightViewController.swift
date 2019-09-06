@@ -102,12 +102,24 @@ class EditSightViewController: UIViewController, UITextFieldDelegate, UIImagePic
             
             let name = nameTextField.text!
             let desc = descTextField.text!
+            
             guard let latitude = Double(latitudeTextField.text!) else {
                 displayMessage(title: "Latitude is invalid", message: "Latitude must be decimal number")
                 return
             }
+            
+            if latitude > 90 || latitude < -90 {
+                displayMessage(title: "Latitude is invalid", message: "Latitude must between -90 and 90")
+                return
+            }
+            
             guard let longitude = Double(longitudeTextField.text!) else {
                 displayMessage(title: "Latitude is invalid", message: "Latitude must be decimal number")
+                return
+            }
+            
+            if latitude > 180 || latitude < -180 {
+                displayMessage(title: "Latitude is invalid", message: "Latitude must between -180 and 180")
                 return
             }
             
@@ -115,48 +127,55 @@ class EditSightViewController: UIViewController, UITextFieldDelegate, UIImagePic
                 displayMessage(title: "Cannot save until a photo has been taken!", message: "Error")
                 return
             }
+            
             let date = UInt(Date().timeIntervalSince1970)
             var data = Data()
             data = image.jpegData(compressionQuality:0.8)!
             let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
             let url = NSURL(fileURLWithPath: path)
+            
             if let pathComponent = url.appendingPathComponent("\(date)") {
                 let filePath = pathComponent.path as String
                 let fileManager = FileManager.default
                 fileManager.createFile(atPath: filePath, contents: data, attributes: nil)
             }
+            
             let photo = "\(date)"
             let mapIcon = "mapIcon_\(mapIconSegmentedControl.selectedSegmentIndex)"
             removeSight(name: sight!.name!)
             let _ = databaseController!.addSight(name: name, desc: desc, latitude: latitude, longitude: longitude, mapIcon: mapIcon, photo: photo)
-            
             sight?.name = name
             sight?.desc = desc
             sight?.latitude = latitude
             sight?.longitude = longitude
             sight?.mapIcon = mapIcon
             sight?.photo = photo
-
             navigationController?.popViewController(animated: true)
             return
         }
         
         var errorMessage = "Please ensure all fields are filled:\n"
+        
         if nameTextField.text == "" {
             errorMessage += "- Must provide name\n"
         }
+        
         if descTextField.text == "" {
             errorMessage += "- Must provide description\n"
         }
+        
         if latitudeTextField.text == "" {
             errorMessage += "- Must provide latitude\n"
         }
+        
         if longitudeTextField.text == "" {
             errorMessage += "- Must provide longitude\n"
         }
+        
         if photoImageView.image == nil {
             errorMessage += "- Must provide a photo"
         }
+        
         displayMessage(title: "Not all fields filled", message: errorMessage)
     }
     

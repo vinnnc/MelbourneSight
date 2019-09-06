@@ -29,7 +29,7 @@ class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManager
         locationManager.requestAlwaysAuthorization()
         mapView.delegate = self
         
-        let defaultRegion = MKCoordinateRegion(center: .init(latitude: -37.8136, longitude: 144.9631), latitudinalMeters: 4000, longitudinalMeters: 4000)
+        let defaultRegion = MKCoordinateRegion(center: .init(latitude: -37.8136, longitude: 144.9631), latitudinalMeters: 2500, longitudinalMeters: 2500)
         mapView.setRegion(mapView.regionThatFits(defaultRegion), animated: true)
         
         addAnnotations()
@@ -49,7 +49,7 @@ class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManager
             allAnnotations.append(annotation)
             
             // Add geofence for each annotation
-            let geoLocation = CLCircularRegion(center: annotation.coordinate, radius: 500, identifier: annotation.title!)
+            let geoLocation = CLCircularRegion(center: annotation.coordinate, radius: 200, identifier: annotation.title!)
             geoLocation.notifyOnExit = true
             geoLocation.notifyOnEntry = true
             locationManager.startMonitoring(for: geoLocation)
