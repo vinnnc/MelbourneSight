@@ -33,7 +33,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Melbourne Sight" id="ZY9-qF-FZf">
                         <rightBarButtonItems>
-                            <barButtonItem systemItem="search" id="WYk-6U-qCW">
+                            <barButtonItem systemItem="bookmarks" id="WYk-6U-qCW">
                                 <connections>
                                     <segue destination="sTk-GP-7aJ" kind="show" identifier="sightListSegue" id="7XP-qg-CuP"/>
                                 </connections>
@@ -123,7 +123,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Meo-Xy-N2F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1080" y="-1162"/>
+            <point key="canvasLocation" x="206" y="236"/>
         </scene>
         <!--Sight Detail-->
         <scene sceneID="zE0-c9-Yje">
@@ -204,6 +204,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="6Cl-FX-K3M" firstAttribute="top" secondItem="aLX-yv-sjV" secondAttribute="top" id="U4j-yu-B66"/>
                                     <constraint firstAttribute="trailing" secondItem="6Cl-FX-K3M" secondAttribute="trailing" id="iXd-VR-heC"/>
@@ -239,7 +240,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0mL-kU-ePq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1079.7101449275362" y="235.71428571428569"/>
+            <point key="canvasLocation" x="1080" y="236"/>
         </scene>
         <!--Edit Sight-->
         <scene sceneID="skF-uA-iLQ">
@@ -304,20 +305,22 @@
                                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dtk-0T-erh">
-                                                <rect key="frame" x="16" y="265" width="382" height="30"/>
+                                                <rect key="frame" x="16" y="265" width="382" height="36"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Use Current Location"/>
                                                 <connections>
                                                     <action selector="useCurrentLocation:" destination="VfR-14-ylS" eventType="touchUpInside" id="9o9-C9-rbk"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map Icon:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z8v-HS-dOT">
-                                                <rect key="frame" x="16" y="311" width="382" height="21"/>
+                                                <rect key="frame" x="16" y="317" width="382" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="GDG-m7-9PE">
-                                                <rect key="frame" x="16" y="348" width="382" height="29"/>
+                                                <rect key="frame" x="16" y="354" width="382" height="29"/>
                                                 <segments>
                                                     <segment title="" image="mapIcon_0"/>
                                                     <segment title="" image="mapIcon_1"/>
@@ -327,22 +330,25 @@
                                                     <segment title="" image="mapIcon_5"/>
                                                     <segment title="" image="mapIcon_6"/>
                                                 </segments>
+                                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </segmentedControl>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zEN-S7-ALh">
-                                                <rect key="frame" x="16" y="392" width="382" height="21"/>
+                                                <rect key="frame" x="16" y="398" width="382" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GWV-wN-BGl">
-                                                <rect key="frame" x="16" y="429" width="382" height="30"/>
+                                                <rect key="frame" x="16" y="435" width="382" height="36"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Take photo"/>
                                                 <connections>
                                                     <action selector="takePhoto:" destination="VfR-14-ylS" eventType="touchUpInside" id="lBQ-QJ-E9Q"/>
                                                 </connections>
                                             </button>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ipC-Ov-7OD">
-                                                <rect key="frame" x="16" y="475" width="382" height="203.5"/>
+                                                <rect key="frame" x="16" y="487" width="382" height="203.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="ipC-Ov-7OD" secondAttribute="height" multiplier="15:8" id="783-35-sAY"/>
                                                 </constraints>
@@ -396,6 +402,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="uSl-QH-RaI" firstAttribute="leading" secondItem="CWm-fr-rc7" secondAttribute="leading" id="Cgj-Jh-KxD"/>
                                     <constraint firstItem="uSl-QH-RaI" firstAttribute="top" secondItem="CWm-fr-rc7" secondAttribute="top" id="cMr-Ln-JLS"/>
@@ -436,7 +443,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cqU-DF-27O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1873.913043478261" y="235.71428571428569"/>
+            <point key="canvasLocation" x="1983" y="236"/>
         </scene>
         <!--Add Sight-->
         <scene sceneID="rwe-10-ObL">
@@ -501,13 +508,13 @@
                                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map Icon:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="43B-D2-TRp">
-                                                <rect key="frame" x="16" y="311" width="382" height="21"/>
+                                                <rect key="frame" x="16" y="317" width="382" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="4YF-kt-8QJ">
-                                                <rect key="frame" x="16" y="348" width="382" height="29"/>
+                                                <rect key="frame" x="16" y="354" width="382" height="29"/>
                                                 <segments>
                                                     <segment title="" image="mapIcon_0"/>
                                                     <segment title="" image="mapIcon_1"/>
@@ -517,28 +524,33 @@
                                                     <segment title="" image="mapIcon_5"/>
                                                     <segment title="" image="mapIcon_6"/>
                                                 </segments>
+                                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </segmentedControl>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aph-c0-nt7">
-                                                <rect key="frame" x="16" y="392" width="382" height="21"/>
+                                                <rect key="frame" x="16" y="398" width="382" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Jm-98-yCD">
-                                                <rect key="frame" x="16" y="429" width="382" height="30"/>
+                                                <rect key="frame" x="16" y="435" width="382" height="36"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Take photo"/>
                                                 <connections>
                                                     <action selector="takePhoto:" destination="xJs-Td-nSS" eventType="touchUpInside" id="yzU-FM-IQE"/>
                                                 </connections>
                                             </button>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pib-xL-5ec">
-                                                <rect key="frame" x="16" y="475" width="382" height="203.5"/>
+                                                <rect key="frame" x="16" y="487" width="382" height="203.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="pib-xL-5ec" secondAttribute="height" multiplier="15:8" id="U8a-Yz-JJn"/>
                                                 </constraints>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Tb-WZ-kv5">
-                                                <rect key="frame" x="16" y="265" width="382" height="30"/>
+                                                <rect key="frame" x="16" y="265" width="382" height="36"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Use Current Location"/>
                                                 <connections>
                                                     <action selector="useCurrentLocation:" destination="xJs-Td-nSS" eventType="touchUpInside" id="PLM-3Z-uDY"/>
@@ -592,6 +604,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="tT4-gF-Z5f" secondAttribute="trailing" id="aVF-K4-BPz"/>
                                     <constraint firstItem="tT4-gF-Z5f" firstAttribute="leading" secondItem="dRk-80-Z2S" secondAttribute="leading" id="bVP-TI-R4f"/>
@@ -628,7 +641,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LVe-zx-Hv3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1873.913043478261" y="-464.0625"/>
+            <point key="canvasLocation" x="1983" y="-464"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9c3-I8-ofm">
@@ -646,7 +659,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aOy-6P-G6V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="291" y="-464"/>
+            <point key="canvasLocation" x="206" y="-464"/>
         </scene>
     </scenes>
     <resources>

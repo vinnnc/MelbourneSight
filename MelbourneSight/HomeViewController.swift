@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 import CoreData
 import CoreLocation
+import UserNotifications
 
 class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, SightDelegate {
     
@@ -18,12 +19,14 @@ class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManager
     var locationManager: CLLocationManager = CLLocationManager()
     var allSights: [Sight] = []
     var allAnnotations: [SightAnnotation] = []
+    var center: UNUserNotificationCenter?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
+        center = appDelegate.center
         
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
@@ -49,19 +52,11 @@ class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManager
             allAnnotations.append(annotation)
             
             // Add geofence for each annotation
-            let geoLocation = CLCircularRegion(center: annotation.coordinate, radius: 200, identifier: annotation.title!)
-            geoLocation.notifyOnExit = true
+            let geoLocation = CLCircularRegion(center: annotation.coordinate, radius: 1, identifier: annotation.title!)
             geoLocation.notifyOnEntry = true
             locationManager.startMonitoring(for: geoLocation)
         }
         mapView.addAnnotations(allAnnotations)
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-        let alert = UIAlertController(title: "Movement Detected!", message: "You have left \(region.identifier)", preferredStyle:
-            .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
     }
     
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
@@ -69,6 +64,19 @@ class HomeViewController: UIViewController, MKMapViewDelegate, CLLocationManager
             .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+        
+        let content = UNMutableNotificationContent()
+        content.title = "Movement Detected!"
+        content.body = "You have entered \(region.identifier)"
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        
+        let uuidString = UUID().uuidString
+        
+        let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
+        
+        center?.add(request) { (error) in
+        }
     }
     
     // AnnotaionViewDelegate is learnt from Youtube
