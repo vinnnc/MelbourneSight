@@ -11,7 +11,6 @@ import MapKit
 
 class SightDetailViewController: UIViewController, MKMapViewDelegate, SightDelegate {
 
-    @IBOutlet weak var mapIconImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var locationMapView: MKMapView!
@@ -47,7 +46,6 @@ class SightDetailViewController: UIViewController, MKMapViewDelegate, SightDeleg
     }
     
     func viewLoadSetup() {
-        mapIconImageView.image = UIImage(named: sight!.mapIcon!)
         nameLabel.text = sight?.name
         descTextView.text = sight?.desc
         photoImageView.image = loadImageData(fileName: sight!.photo!)
