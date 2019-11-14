@@ -83,21 +83,21 @@
 			isa = PBXGroup;
 			children = (
 				9B63462523220BF30052CB4D /* MelbourneSight.entitlements */,
+				9B49B5B323192C5200A6AB22 /* Info.plist */,
 				9B49B5C12319343D00A6AB22 /* AddSightViewController.swift */,
 				9B49B5A723192C5100A6AB22 /* AppDelegate.swift */,
-				9B49B5AE23192C5200A6AB22 /* Assets.xcassets */,
-				9B49B5CD231A275600A6AB22 /* Database */,
-				9B49B5CC231A274E00A6AB22 /* DataModel */,
 				9B49B5C32319344A00A6AB22 /* EditSightViewController.swift */,
 				9B49B5B92319340000A6AB22 /* HomeViewController.swift */,
-				9B49B5B323192C5200A6AB22 /* Info.plist */,
-				9B49B5B023192C5200A6AB22 /* LaunchScreen.storyboard */,
-				9B49B5AB23192C5100A6AB22 /* Main.storyboard */,
 				9B49B5CA231A23FA00A6AB22 /* SightAnnotation.swift */,
 				9BB64177231E665000F0B14E /* SightDelegate.swift */,
 				9B49B5C52319345100A6AB22 /* SightDetailViewController.swift */,
 				9B49B5BB2319341100A6AB22 /* SightListTableViewController.swift */,
 				9B49B5BD2319341F00A6AB22 /* SightTableViewCell.swift */,
+				9B49B5AE23192C5200A6AB22 /* Assets.xcassets */,
+				9B49B5CD231A275600A6AB22 /* Database */,
+				9B49B5CC231A274E00A6AB22 /* DataModel */,
+				9B49B5B023192C5200A6AB22 /* LaunchScreen.storyboard */,
+				9B49B5AB23192C5100A6AB22 /* Main.storyboard */,
 			);
 			path = MelbourneSight;
 			sourceTree = "<group>";
@@ -302,7 +302,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -357,7 +357,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
